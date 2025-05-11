@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 69% 11%; /* #0A192F */
+    --foreground: 225 67% 88%; /* #CCD6F6 */
+
+    --card: 212 63% 18%; /* #102A4C */
+    --card-foreground: 225 67% 88%; /* #CCD6F6 */
+
+    --popover: 212 63% 18%; /* #102A4C */
+    --popover-foreground: 225 67% 88%; /* #CCD6F6 */
+
+    --primary: 168 100% 70%; /* #64FFDA - Teal */
+    --primary-foreground: 210 69% 11%; /* #0A192F - Dark Blue for text on Teal */
+
+    --secondary: 213 50% 25%; /* #1F3A5F */
+    --secondary-foreground: 225 67% 88%; /* #CCD6F6 */
+
+    --muted: 213 38% 31%; /* #304A6D */
+    --muted-foreground: 223 36% 74%; /* #A8B2D1 */
+
+    --accent: 168 100% 70%; /* #64FFDA - Teal for hover/focus */
+    --accent-foreground: 210 69% 11%; /* #0A192F - Dark Blue for text on Teal accent */
+    
+    --destructive: 0 72% 51%; /* Adjusted for better visibility on dark bg */
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 212 49% 28%; /* #234569 */
+    --input: 209 49% 22%; /* #1D3953 */
+    --ring: 168 100% 70%; /* #64FFDA - Teal for focus rings */
+
+    --radius: 0.5rem;
+
+    /* Chart colors themed for dark background */
+    --chart-1: 168 80% 60%; /* Teal variant */
+    --chart-2: 225 60% 70%; /* Light gray variant */
+    --chart-3: 210 50% 50%; /* Blue variant */
+    --chart-4: 180 70% 55%; /* Cyan variant */
+    --chart-5: 200 65% 65%; /* Another blue/gray variant */
+
+    /* Sidebar Variables */
+    --sidebar-background: 212 63% 18%; /* #102A4C */
+    --sidebar-foreground: 225 67% 88%; /* #CCD6F6 */
+    --sidebar-primary: 168 100% 70%; /* #64FFDA */
+    --sidebar-primary-foreground: 210 69% 11%; /* #0A192F */
+    --sidebar-accent: 213 50% 25%; /* #1F3A5F */
+    --sidebar-accent-foreground: 225 67% 88%; /* #CCD6F6 */
+    --sidebar-border: 212 49% 28%; /* #234569 */
+    --sidebar-ring: 168 100% 70%; /* #64FFDA */
+  }
+}
+
+@layer utilities {
+  /* Custom Animation Utilities */
+  .animate-fadeInUp {
+    animation-name: fadeInUp;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-duration: 0.8s; /* Default duration */
+  }
+  .animate-fadeIn {
+    animation-name: fadeIn;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-duration: 0.8s; /* Default duration */
+  }
+  .animate-slideInLeft {
+    animation-name: slideInLeft;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-duration: 0.8s; /* Default duration */
+  }
+  .animate-slideInRight {
+    animation-name: slideInRight;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-duration: 0.8s; /* Default duration */
+  }
+  .animate-zoomIn {
+    animation-name: zoomIn;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    animation-duration: 0.6s; /* Default duration */
+  }
+
+  /* Keyframes */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
