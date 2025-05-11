@@ -29,7 +29,7 @@ export function Navbar() {
         ? "bg-background/95 shadow-lg backdrop-blur-md border-b border-border/40" 
         : "bg-background/80 backdrop-blur-sm border-b border-border/20"
     )}>
-      <div className="container mx-auto flex h-28 items-center px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-20 items-center px-4 sm:px-6 lg:px-8">
         {/* Logo Section */}
         <div className="flex items-center">
           <Link 
@@ -37,7 +37,7 @@ export function Navbar() {
             className="flex items-center text-primary hover:text-primary/90 transition-colors group" 
             aria-label="Home"
           >
-            <div className="relative h-24 w-24 transition-transform duration-300 group-hover:scale-105">
+            <div className="relative h-16 w-16 transition-transform duration-300 group-hover:scale-105">
               <Image
                 src="/logo.png"
                 alt="Logo"
