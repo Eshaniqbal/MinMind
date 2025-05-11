@@ -12,9 +12,9 @@ export const metadata = {
 
 export default function ContactPage() {
   const contactDetails = [
-    { icon: Mail, title: "Email", href: "mailto:contact@minmind.dev", text: "contact@minmind.dev", subtext: "For general inquiries and project proposals." },
-    { icon: Phone, title: "Phone", href: "tel:+1234567890", text: "+1 (234) 567-890", subtext: "Mon - Fri, 9 AM - 6 PM (EST)" }, // Placeholder
-    { icon: MapPin, title: "Location", text: "Digital First - Serving Clients Globally", subtext: "While we operate remotely, we're always connected." }
+    { icon: Mail, title: "Email", href: "mailto:contact@minmind.com", text: "contact@minmind.com", subtext: "For general inquiries and project proposals." },
+    { icon: Phone, title: "Phone", href: "tel:+916006223504", text: "+91-6006223504", subtext: "Mon - Fri, 9 AM - 6 PM (IST)" }, // Placeholder
+    { icon: MapPin, title: "Location", text: "Kulgam, Jammu and Kashmir, India, 192231", subtext: "While we operate remotely, we're always connected." }
   ];
 
   return (
