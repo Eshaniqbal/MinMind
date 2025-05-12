@@ -14,18 +14,8 @@ export const metadata: Metadata = {
   },
   description: 'MinMind : Building modern, responsive websites and delivering projects.',
   icons: {
-    icon: [
-      {
-        url: '/logo.png',
-        href: '/logo.png',
-      }
-    ],
-    apple: [
-      {
-        url: '/logo.png',
-        href: '/logo.png',
-      }
-    ],
+    icon: '/logo1.png',
+    apple: '/logo1.png',
   },
 };
 
@@ -36,10 +26,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <head>
-        <link rel="icon" href="/logo.png" />
-        <link rel="apple-touch-icon" href="/logo.png" />
-      </head>
       <body className={`${GeistSans.variable} font-sans antialiased flex flex-col min-h-screen bg-background`}>
         <Navbar />
         <main className="flex-grow">
