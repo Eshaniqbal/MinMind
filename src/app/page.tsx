@@ -621,7 +621,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="mt-8 py-6">
+      <section className="mt-8 md:mt-16 py-6">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {[
@@ -655,7 +655,7 @@ export default function HomePage() {
       </section>
 
       {/* Enhanced What We Do Section */}
-      <section className="pt-6 pb-0">
+      <section className="mt-12 md:mt-16 pt-6 pb-0">
         <div className="container mx-auto px-4 md:px-6">
           <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">What We Do</h2>
@@ -739,7 +739,7 @@ export default function HomePage() {
       </section>
 
       {/* Projects Section */}
-      <section className="mt-4 md:mt-6 pb-6">
+      <section className="mt-12 md:mt-16 pb-6">
         <div className="container mx-auto px-4 md:px-6">
           <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-8">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">Featured Projects</h2>
@@ -802,7 +802,7 @@ export default function HomePage() {
       </section>
 
       {/* Blog Highlights Section */}
-      <section className="py-6">
+      <section className="mt-8 md:mt-16 py-6">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Latest Insights</h2>
@@ -851,7 +851,7 @@ export default function HomePage() {
       </section>
 
       {/* Process Section */}
-      <section className="py-6">
+      <section className="mt-8 md:mt-16 py-6">
         <div className="container mx-auto px-4 md:px-6">
           <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">Our Process</h2>
@@ -892,7 +892,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="mt-8 py-6">
+      <section className="mt-8 md:mt-16 py-6">
         <div className="container mx-auto px-4 md:px-6">
           <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">Client Testimonials</h2>
@@ -931,7 +931,7 @@ export default function HomePage() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="mt-8 py-6 relative overflow-hidden">
+      <section className="mt-8 md:mt-16 py-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary to-teal-400 opacity-90" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
         <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
@@ -954,7 +954,7 @@ export default function HomePage() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="mt-8 py-6">
+      <section className="mt-8 md:mt-16 py-6">
         <div className="container mx-auto px-4 md:px-6">
           <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">Why Choose Us</h2>
@@ -1015,7 +1015,7 @@ export default function HomePage() {
       </section>
 
       {/* Tech Stack Section */}
-      <section className="mt-8 py-6">
+      <section className="mt-8 md:mt-16 py-6">
         <div className="container mx-auto px-4 md:px-6">
           <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">Our Tech Stack</h2>
@@ -1050,7 +1050,7 @@ export default function HomePage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="mt-8 py-6">
+      <section className="mt-8 md:mt-16 py-6">
         <div className="container mx-auto px-4 md:px-6">
           <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">Frequently Asked Questions</h2>
