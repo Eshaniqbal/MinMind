@@ -1,95 +1,176 @@
-import { PageHeader } from '@/components/page-header';
-import { SERVICES_PROVIDED, APP_NAME } from '@/lib/constants';
+"use client";
+
+import { Globe, Database, Server, Shield, Zap, Users, CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { CheckCircle } from 'lucide-react';
-import { ScrollAnimationWrapper } from '@/components/scroll-animation-wrapper';
-import { ServiceSlider } from '@/components/service-slider';
+import { ArrowRight } from 'lucide-react';
 
-export const metadata = {
-  title: 'Our Services',
-  description: `Explore the range of digital solutions offered by ${APP_NAME}, including web development, app development, digital marketing, UI/UX design, and custom software solutions.`,
-};
+const services = [
+  {
+    icon: Globe,
+    title: "Web Development",
+    description: "Custom websites and web applications built with modern technologies like Next.js, React, and Node.js.",
+    features: [
+      "Responsive Design",
+      "Progressive Web Apps",
+      "E-commerce Solutions",
+      "Custom CMS Development",
+      "Single Page Applications",
+      "Cross-browser Compatibility"
+    ],
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js"]
+  },
+  {
+    icon: Database,
+    title: "Backend Development",
+    description: "Robust server-side solutions and API development for scalable applications.",
+    features: [
+      "RESTful APIs",
+      "GraphQL",
+      "Microservices",
+      "Database Design",
+      "API Integration",
+      "Server Optimization"
+    ],
+    technologies: ["Node.js", "Python", "Java", "Go", "PostgreSQL", "MongoDB"]
+  },
+  {
+    icon: Server,
+    title: "Cloud Solutions",
+    description: "Cloud infrastructure setup and management for optimal performance and scalability.",
+    features: [
+      "AWS",
+      "Azure",
+      "Google Cloud",
+      "Serverless Architecture",
+      "Cloud Migration",
+      "Infrastructure as Code"
+    ],
+    technologies: ["AWS", "Azure", "GCP", "Terraform", "Docker", "Kubernetes"]
+  },
+  {
+    icon: Shield,
+    title: "Security",
+    description: "Comprehensive security solutions to protect your digital assets.",
+    features: [
+      "SSL/TLS",
+      "DDoS Protection",
+      "Security Audits",
+      "Penetration Testing",
+      "Security Monitoring",
+      "Compliance Management"
+    ],
+    technologies: ["OWASP", "SSL/TLS", "WAF", "SIEM", "IDS/IPS"]
+  },
+  {
+    icon: Zap,
+    title: "Performance Optimization",
+    description: "Speed and performance optimization for better user experience.",
+    features: [
+      "Load Testing",
+      "Caching",
+      "CDN Integration",
+      "Code Optimization",
+      "Database Optimization",
+      "Resource Optimization"
+    ],
+    technologies: ["Lighthouse", "WebPageTest", "Redis", "CDN", "Webpack"]
+  },
+  {
+    icon: Users,
+    title: "Consulting",
+    description: "Expert guidance on technology choices and digital transformation.",
+    features: [
+      "Tech Stack Selection",
+      "Architecture Design",
+      "Best Practices",
+      "Technical Due Diligence",
+      "Digital Strategy",
+      "Technology Roadmap"
+    ],
+    technologies: ["Architecture Patterns", "Best Practices", "Industry Standards"]
+  }
+];
 
 export default function ServicesPage() {
-  const processItems = [
-    "Discovery & Planning: Understanding your goals and requirements.",
-    "Design & Prototyping: Crafting intuitive and engaging user experiences.",
-    "Development & Testing: Building robust solutions with rigorous quality assurance.",
-    "Deployment & Launch: Ensuring a smooth rollout of your project.",
-    "Ongoing Support & Maintenance: Providing continued assistance post-launch."
-  ];
-
-  const commitmentItems = [
-    { strong: "Quality First:", text: "We are committed to delivering high-quality, bug-free, and scalable solutions." },
-    { strong: "Transparent Communication:", text: "We maintain open and honest communication throughout the project lifecycle." },
-    { strong: "Timely Delivery:", text: "We respect deadlines and strive to deliver projects on time and within budget." },
-    { strong: "Client Satisfaction:", text: "Your success is our priority. We work tirelessly to ensure you are delighted with the final product." },
-  ];
-
   return (
-    <>
-      <PageHeader
-        title="Our Digital Solutions"
-        description={`At ${APP_NAME}, we offer a comprehensive suite of services designed to bring your digital vision to life. Explore how we can help you succeed.`}
-      />
-
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
-        <section className="mb-12 md:mb-16">
-          <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-8">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground">Our Services</h2>
-            <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
-              Discover our range of digital services tailored to meet your needs
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="py-20 md:py-32 relative overflow-hidden">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+              Our Services
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8">
+              Comprehensive digital solutions tailored to your business needs
             </p>
-          </ScrollAnimationWrapper>
-          <div className="mt-8">
-            <ServiceSlider services={SERVICES_PROVIDED} />
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-12 md:py-16 bg-card rounded-lg shadow-lg">
-          <div className="container mx-auto px-4 md:px-6">
-            <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-12">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground">Our Process & Commitment</h2>
-              <p className="mt-3 max-w-2xl mx-auto text-lg text-muted-foreground">
-                We follow a structured yet flexible approach to ensure project success and client satisfaction.
-              </p>
-            </ScrollAnimationWrapper>
-            <div className="grid md:grid-cols-2 gap-8 items-start">
-              <ScrollAnimationWrapper animationType="slideInLeft">
-                <div>
-                  <h3 className="text-2xl font-semibold text-primary mb-4">How We Work</h3>
-                  <ul className="space-y-3 text-muted-foreground">
-                    {processItems.map((item, index) => (
-                      <li key={index} className="flex items-start">
-                        <CheckCircle className="h-5 w-5 text-primary mr-3 mt-1 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+      {/* Services Grid */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service, index) => (
+              <motion.div
+                key={service.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative p-8 rounded-xl bg-background/50 border border-primary/20 hover:border-primary/40 transition-all duration-300"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative">
+                  <service.icon className="h-12 w-12 text-primary mb-6" />
+                  <h3 className="text-2xl font-semibold text-foreground mb-4">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6">{service.description}</p>
+                  
+                  <div className="mb-6">
+                    <h4 className="text-sm font-semibold text-foreground mb-3">Key Features</h4>
+                    <ul className="space-y-2">
+                      {service.features.map((feature, i) => (
+                        <li key={i} className="flex items-center text-sm text-muted-foreground">
+                          <CheckCircle className="h-4 w-4 text-primary mr-2" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-semibold text-foreground mb-3">Technologies</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {service.technologies.map((tech, i) => (
+                        <span key={i} className="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </ScrollAnimationWrapper>
-              <ScrollAnimationWrapper animationType="slideInRight" delay={200}>
-                <div className="mt-8 md:mt-0">
-                   <h3 className="text-2xl font-semibold text-primary mb-4">Our Commitment to You</h3>
-                   <div className="space-y-4 text-muted-foreground">
-                    {commitmentItems.map((item, index) => (
-                      <p key={index}><strong>{item.strong}</strong> {item.text}</p>
-                    ))}
-                   </div>
-                </div>
-              </ScrollAnimationWrapper>
-            </div>
-            <ScrollAnimationWrapper animationType="fadeInUp" delay={400} className="text-center mt-12">
-              <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                <Link href="/contact">
-                  Discuss Your Project
-                </Link>
-              </Button>
-            </ScrollAnimationWrapper>
+              </motion.div>
+            ))}
           </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-background/50">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Let's discuss how we can help transform your digital presence
+          </p>
+          <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+            <Link href="/contact">
+              Contact Us <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+        </div>
+      </section>
+    </div>
   );
 }

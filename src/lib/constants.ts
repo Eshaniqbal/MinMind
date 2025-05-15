@@ -1,5 +1,5 @@
 import type { NavItem, Project, Service, FaqItem } from './types';
-import { Home, Info, Briefcase, Lightbulb, MessageSquare, FileText, HelpCircle, GitBranch, Users, Palette, Bot, Code2, ShieldQuestion, Rocket, Smartphone, BarChart } from 'lucide-react';
+import { Home, Info, Briefcase, Lightbulb, MessageSquare, FileText, HelpCircle, GitBranch, Users, Palette, Bot, Code2, ShieldQuestion, Rocket, Smartphone, BarChart, BookOpen } from 'lucide-react';
 
 export const APP_NAME = "MinMind Digital Solutions";
 export const FOUNDER_NAME = "Eshan Iqbal";
@@ -9,6 +9,7 @@ export const NAV_LINKS: NavItem[] = [
   { label: 'About Us', href: '/about', icon: Info },
   { label: 'Services', href: '/services', icon: Briefcase },
   { label: 'Projects', href: '/projects', icon: Palette },
+  { label: 'Blog', href: '/blog', icon: BookOpen },
   { label: 'Contact', href: '/contact', icon: MessageSquare },
   { label: 'Get a Quote', href: '/quote', icon: FileText },
   { label: 'FAQs', href: '/faq', icon: HelpCircle },
@@ -22,20 +23,20 @@ export const FOOTER_LINKS = {
     { label: 'Contact', href: '/contact' },
   ],
   resources: [
+    { label: 'Blog', href: '/blog' },
     { label: 'Get a Quote', href: '/quote' },
     { label: 'FAQs', href: '/faq' },
-    // { label: 'Blog', href: '/blog' }, // Optional
   ],
   legal: [
-    { label: 'Privacy Policy', href: '#' }, // Placeholder
-    { label: 'Terms of Service', href: '#' }, // Placeholder
+    { label: 'Privacy Policy', href: '/privacy-policy' }, // Placeholder
+    { label: 'Terms of Service', href: '/terms-of-service' }, // Placeholder
   ]
 };
 
 export const SOCIAL_LINKS: NavItem[] = [
-    { label: 'GitHub', href: '#', icon: GitBranch }, // Replace # with actual link
-    { label: 'LinkedIn', href: '#', icon: Users },
-    { label: 'Instagram', href: '#', icon: Users }, // Using Users icon as Instagram is not imported
+    { label: 'GitHub', href: 'https://github.com/Eshaniqbal', icon: GitBranch }, // Replace # with actual link
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/eshaniqbal/', icon: Users },
+    { label: 'Instagram', href: 'https://www.instagram.com/eshaniqbal_', icon: Users }, // Using Users icon as Instagram is not imported
     // Replace # with actual link
 ];
 
@@ -47,7 +48,7 @@ export const PLACEHOLDER_PROJECTS: Project[] = [
     imageUrl: 'https://picsum.photos/seed/shop/600/400',
     dataAiHint: 'e-commerce website',
     techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Stripe', 'PostgreSQL'],
-    liveLink: '#',
+    liveLink: 'https://healkart.vercel.app/',
   },
   {
     id: '2',
@@ -56,7 +57,7 @@ export const PLACEHOLDER_PROJECTS: Project[] = [
     imageUrl: 'https://picsum.photos/seed/aibot/600/400',
     dataAiHint: 'chatbot interface',
     techStack: ['Python', 'Flask', 'React', 'Docker', 'NLP'],
-    repoLink: '#',
+    repoLink: 'https://github.com/eshaniqbal',
   },
   {
     id: '3',
@@ -73,11 +74,11 @@ export const PLACEHOLDER_PROJECTS: Project[] = [
     imageUrl: 'https://picsum.photos/seed/devfolio/600/400',
     dataAiHint: 'portfolio design',
     techStack: ['React', 'Gatsby', 'GraphQL', 'Netlify'],
-    liveLink: '#',
+    liveLink: 'https://eshaniqbal.github.io/portfolio1',
   },
 ];
 
-export const SERVICES_PROVIDED = [
+export const SERVICES_PROVIDED: Service[] = [
   {
     id: 'web-dev',
     title: 'Web Development',

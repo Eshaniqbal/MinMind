@@ -22,7 +22,7 @@ export type Service = {
   id: string;
   title: string;
   description: string;
-  iconName: string;
+  iconName: 'Code2' | 'Smartphone' | 'BarChart' | 'Palette' | 'Bot';
 };
 
 export type FaqItem = {
