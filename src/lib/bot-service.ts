@@ -174,9 +174,11 @@ export function processQuery(query: string): BotResponse {
     }
   }
 
-  // If no exact match, check for partial matches
+  // If no exact match, check for partial matches using a more flexible approach
   for (const { pattern, response } of commonQueries) {
-    if (cleanQuery.includes(pattern.source.replace(/[^a-z]/gi, ''))) {
+    const patternWords = pattern.source.replace(/[^a-z\s]/gi, '').split(' ');
+    const queryWords = cleanQuery.split(' ');
+    if (patternWords.some(word => queryWords.includes(word))) {
       return response(cleanQuery);
     }
   }

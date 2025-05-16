@@ -1039,7 +1039,7 @@ export default function HomePage() {
                 animationType="fadeInUp"
                 delay={index * 100}
               >
-                <div className="group p-6 rounded-xl bg-background border border-primary/20 hover:border-primary/40 transition-all duration-300 text-center">
+                <div className="group p-6 rounded-xl bg-background border border-primary/20 hover:border-primary/40 transition-all duration-300 text-center hover:shadow-2xl hover:shadow-blue-500/80">
                   <div className="text-4xl mb-2">{tech.icon}</div>
                   <h3 className="text-lg font-semibold text-foreground">{tech.name}</h3>
                 </div>
