@@ -6,6 +6,7 @@ import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/layout/footer';
 import { Toaster } from "@/components/ui/toaster"
 import { APP_NAME } from '@/lib/constants';
+import { ChatInterface } from '@/components/chat-interface';
 
 export const metadata: Metadata = {
   title: {
@@ -33,6 +34,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <Toaster />
+        <ChatInterface />
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Calendar, Clock, Tag } from 'lucide-react';
+import { ChatInterface } from '@/components/chat-interface';
 
 const blogPosts = [
   {
@@ -157,6 +158,8 @@ export default function BlogPage() {
 
       {/* Newsletter Section */}
       
+      {/* Chat Interface */}
+      <ChatInterface />
     </div>
   );
 } 
