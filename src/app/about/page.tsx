@@ -4,6 +4,7 @@ import { PageHeader } from '@/components/page-header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Target, Users, Eye, Zap } from 'lucide-react';
 import { ScrollAnimationWrapper } from '@/components/scroll-animation-wrapper';
+import { TeamCard } from '@/components/team-card';
 
 export const metadata = {
   title: 'About Us',
@@ -15,6 +16,42 @@ export default function AboutPage() {
     { icon: Target, title: "Our Mission", content: "To empower businesses and individuals by crafting innovative, high-quality digital solutions that drive growth, efficiency, and success in the modern technological landscape." },
     { icon: Eye, title: "Our Vision", content: "To be a leading digital partner, recognized for our commitment to excellence, technological expertise, and our ability to transform complex challenges into elegant and impactful solutions." },
     { icon: Zap, title: "Our Values", content: <ul className="list-disc list-inside text-muted-foreground space-y-1"><li>Innovation & Creativity</li><li>Quality & Excellence</li><li>Client-Centricity</li><li>Integrity & Transparency</li><li>Continuous Learning</li></ul> },
+  ];
+
+  const teamMembers = [
+    {
+      name: "Eshan Iqbal",
+      role: "Founder & Lead Developer",
+      image: "/founder.jpg",
+      description: "Full-stack developer with expertise in modern web technologies and cloud architecture.",
+      social: {
+        github: "https://github.com/eshaniqbal",
+        linkedin: "https://linkedin.com/in/eshaniqbal",
+        twitter: "https://twitter.com/eshan"
+      }
+    },
+    {
+      name: "Inayat Altaf Shah",
+      role: "Senior Full Stack Developer",
+      image: "/team/inayat.jpg",
+      description: "Specializes in React, Node.js, and cloud solutions with a focus on scalable applications.",
+      social: {
+        github: "#",
+        linkedin: "#",
+        twitter: "#"
+      }
+    },
+    {
+      name: "Shahid Manzoor",
+      role: "Marketing & Sales",
+      image: "/team/shahid.png",
+      description: "Expert in digital marketing strategies, brand development, and sales optimization with a focus on driving business growth.",
+      social: {
+        github: "#",
+        linkedin: "#",
+        twitter: "#"
+      }
+    }
   ];
 
   return (
@@ -86,20 +123,27 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Team Section (Placeholder) */}
+        {/* Team Section */}
         <section>
-          <ScrollAnimationWrapper animationType="fadeInUp" className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-foreground mb-8">Our Team</h2>
-            <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-              While {APP_NAME} is spearheaded by {FOUNDER_NAME}, we collaborate with a network of talented professionals to deliver the best results for your projects. We believe in the power of teamwork and diverse expertise.
-            </p>
-            <div className="flex justify-center">
-              <Users className="h-24 w-24 text-primary opacity-50" />
-            </div>
-            <p className="text-center text-muted-foreground mt-4">
-              More team information coming soon!
+          <ScrollAnimationWrapper animationType="fadeInUp" className="text-center mb-12">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground mb-4">Our Team</h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Meet the talented individuals behind {APP_NAME}. Our diverse team brings together expertise from various domains to deliver exceptional results.
             </p>
           </ScrollAnimationWrapper>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {teamMembers.map((member, index) => (
+              <ScrollAnimationWrapper
+                key={member.name}
+                animationType="fadeInUp"
+                delay={index * 150}
+                className="h-full"
+              >
+                <TeamCard member={member} />
+              </ScrollAnimationWrapper>
+            ))}
+          </div>
         </section>
       </div>
     </>
