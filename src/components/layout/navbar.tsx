@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +20,7 @@ export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [openSections, setOpenSections] = useState<string[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +30,15 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const NavLink = ({ item }: { item: NavItem }) => {
+  const toggleSection = (label: string) => {
+    setOpenSections(prev => 
+      prev.includes(label) 
+        ? prev.filter(item => item !== label)
+        : [...prev, label]
+    );
+  };
+
+  const DesktopNavLink = ({ item }: { item: NavItem }) => {
     if (item.items) {
       return (
         <DropdownMenu>
@@ -37,28 +46,55 @@ export function Navbar() {
             <Button
               variant="ghost"
               className={cn(
-                "text-xs font-medium transition-all duration-300 h-8 px-3 rounded-full gap-1",
+                "text-sm font-medium transition-all duration-300 h-9 px-4 rounded-full gap-1.5 group",
                 pathname === item.href 
-                  ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md" 
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90" 
                   : "text-foreground hover:text-primary hover:bg-accent/10"
               )}
             >
-              {item.icon && <item.icon className="h-3.5 w-3.5" />}
+              {item.icon && (
+                <item.icon 
+                  className={cn(
+                    "h-4 w-4 transition-transform duration-300 group-hover:scale-110",
+                    pathname === item.href ? "text-primary-foreground" : "text-primary"
+                  )} 
+                />
+              )}
               {item.label}
-              <ChevronDown className="h-3.5 w-3.5" />
+              <ChevronDown className={cn(
+                "h-4 w-4 transition-transform duration-300",
+                "group-hover:translate-y-0.5",
+                "group-data-[state=open]:rotate-180"
+              )} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-48">
+          <DropdownMenuContent 
+            align="start"
+            className="w-56 p-2 backdrop-blur-lg bg-background/95 border-border/40"
+          >
             {item.items.map((subItem) => (
-              <DropdownMenuItem key={subItem.href} asChild>
+              <DropdownMenuItem 
+                key={subItem.href}
+                asChild
+                className="group"
+              >
                 <Link
                   href={subItem.href}
                   className={cn(
-                    "flex items-center w-full px-2 py-1.5 text-sm",
-                    pathname === subItem.href && "bg-primary/10 text-primary"
+                    "flex items-center w-full px-3 py-2 text-sm rounded-md transition-colors duration-300",
+                    pathname === subItem.href 
+                      ? "bg-primary/10 text-primary" 
+                      : "hover:bg-accent/10 hover:text-primary"
                   )}
                 >
-                  {subItem.icon && <subItem.icon className="mr-2 h-4 w-4" />}
+                  {subItem.icon && (
+                    <subItem.icon 
+                      className={cn(
+                        "mr-2 h-4 w-4 transition-transform duration-300 group-hover:scale-110",
+                        pathname === subItem.href ? "text-primary" : "text-muted-foreground group-hover:text-primary"
+                      )} 
+                    />
+                  )}
                   {subItem.label}
                 </Link>
               </DropdownMenuItem>
@@ -73,15 +109,23 @@ export function Navbar() {
         variant={pathname === item.href ? "default" : "ghost"}
         asChild
         className={cn(
-          "text-xs font-medium transition-all duration-300 h-8 px-3 rounded-full",
+          "text-sm font-medium transition-all duration-300 h-9 px-4 rounded-full group",
           pathname === item.href 
-            ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md" 
-            : "text-foreground hover:text-primary hover:bg-accent/10",
-          "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+            : item.highlight
+              ? "bg-primary/10 text-primary hover:bg-primary/20"
+              : "text-foreground hover:text-primary hover:bg-accent/10"
         )}
       >
-        <Link href={item.href}>
-          {item.icon && <item.icon className="mr-1.5 h-3.5 w-3.5" />}
+        <Link href={item.href} className="flex items-center gap-1.5">
+          {item.icon && (
+            <item.icon 
+              className={cn(
+                "h-4 w-4 transition-transform duration-300 group-hover:scale-110",
+                pathname === item.href || item.highlight ? "text-primary-foreground" : "text-primary"
+              )} 
+            />
+          )}
           {item.label}
         </Link>
       </Button>
@@ -90,12 +134,12 @@ export function Navbar() {
 
   return (
     <header className={cn(
-      "sticky top-0 z-50 w-full transition-all duration-300",
+      "sticky top-0 z-50 w-full transition-all duration-500",
       isScrolled 
         ? "bg-background/95 shadow-lg backdrop-blur-md border-b border-border/40" 
-        : "bg-background/80 backdrop-blur-sm border-b border-border/20"
+        : "bg-background/80 backdrop-blur-sm"
     )}>
-      <div className="container mx-auto flex h-20 items-center px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo Section */}
         <div className="flex items-center">
           <Link 
@@ -103,7 +147,7 @@ export function Navbar() {
             className="flex items-center text-primary hover:text-primary/90 transition-colors group" 
             aria-label="Home"
           >
-            <div className="relative h-16 w-16 transition-transform duration-300 group-hover:scale-105">
+            <div className="relative h-10 w-10 transition-transform duration-300 group-hover:scale-110">
               <Image
                 src="/logo.png"
                 alt="Logo"
@@ -115,109 +159,133 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Navigation Section */}
-        <div className="flex-1 flex items-center justify-end">
-          <nav className="hidden md:flex items-center gap-1.5 lg:gap-3">
-            {NAV_LINKS.map((item) => (
-              <NavLink key={item.href} item={item} />
-            ))}
-          </nav>
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-1">
+          {NAV_LINKS.map((item) => (
+            <DesktopNavLink key={item.href} item={item} />
+          ))}
+        </nav>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="h-8 w-8 rounded-full hover:bg-accent/10" 
-                  aria-label="Open menu"
-                >
-                  <Menu className="h-5 w-5 text-primary" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent 
-                side="right" 
-                className="w-full max-w-xs bg-background/95 backdrop-blur-md border-l border-border/40"
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="h-9 w-9 rounded-full hover:bg-accent/10"
+                aria-label="Open menu"
               >
-                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                <div className="flex flex-col space-y-6">
-                  {/* Mobile Logo */}
-                  <div className="flex items-center">
-                    <div className="relative h-24 w-24">
-                      <Image
-                        src="/logo.png"
-                        alt="Logo"
-                        fill
-                        className="object-contain"
-                        priority
-                      />
+                <Menu className="h-5 w-5 text-primary" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent 
+              side="right"
+              className="w-full max-w-xs p-0 bg-background/95 backdrop-blur-lg"
+            >
+              <div className="flex flex-col h-full">
+                {/* Mobile Header */}
+                <SheetHeader className="p-4 border-b border-border/40">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="relative h-10 w-10">
+                        <Image
+                          src="/logo.png"
+                          alt="Logo"
+                          fill
+                          className="object-contain"
+                          priority
+                        />
+                      </div>
+                      <SheetTitle className="text-lg font-semibold">
+                        Menu
+                      </SheetTitle>
                     </div>
+                    <SheetTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        size="icon"
+                        className="h-9 w-9 rounded-full hover:bg-accent/10"
+                      >
+                        <X className="h-5 w-5 text-primary" />
+                      </Button>
+                    </SheetTrigger>
                   </div>
+                </SheetHeader>
 
-                  {/* Mobile Divider */}
-                  <div className="h-px w-full bg-border/40" />
-
-                  {/* Mobile Navigation */}
-                  <div className="space-y-1.5">
+                {/* Mobile Navigation */}
+                <div className="flex-1 overflow-y-auto py-4 px-4">
+                  <nav className="space-y-2">
                     {NAV_LINKS.map((item) => (
-                      <div key={item.href}>
+                      <div key={item.href} className="space-y-2">
                         {item.items ? (
-                          <>
-                            <div className="flex items-center px-3 py-2 text-sm font-medium text-foreground">
-                              {item.icon && <item.icon className="h-4 w-4 mr-2" />}
-                              {item.label}
-                            </div>
-                            <div className="pl-5 space-y-1">
-                              {item.items.map((subItem) => (
-                                <SheetClose key={subItem.href} asChild>
+                          <div className="space-y-2">
+                            <Button
+                              variant="ghost"
+                              className="w-full justify-between text-left font-medium"
+                              onClick={() => toggleSection(item.label)}
+                            >
+                              <span className="flex items-center gap-2">
+                                {item.icon && <item.icon className="h-4 w-4 text-primary" />}
+                                {item.label}
+                              </span>
+                              <ChevronDown className={cn(
+                                "h-4 w-4 transition-transform duration-200",
+                                openSections.includes(item.label) && "rotate-180"
+                              )} />
+                            </Button>
+                            {openSections.includes(item.label) && (
+                              <div className="pl-4 space-y-1">
+                                {item.items.map((subItem) => (
                                   <Link
+                                    key={subItem.href}
                                     href={subItem.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
                                     className={cn(
-                                      "flex items-center space-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                                      pathname === subItem.href 
-                                        ? "bg-primary/10 text-primary" 
-                                        : "text-foreground hover:bg-accent/10 hover:text-primary"
+                                      "flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors",
+                                      pathname === subItem.href
+                                        ? "bg-primary/10 text-primary"
+                                        : "text-muted-foreground hover:bg-accent/10 hover:text-primary"
                                     )}
                                   >
                                     {subItem.icon && <subItem.icon className="h-4 w-4" />}
-                                    <span>{subItem.label}</span>
+                                    {subItem.label}
                                   </Link>
-                                </SheetClose>
-                              ))}
-                            </div>
-                          </>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         ) : (
-                          <SheetClose asChild>
-                            <Link
-                              href={item.href}
-                              className={cn(
-                                "flex items-center space-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                                pathname === item.href 
-                                  ? "bg-primary/10 text-primary" 
+                          <Link
+                            href={item.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className={cn(
+                              "flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition-colors",
+                              pathname === item.href
+                                ? "bg-primary text-primary-foreground"
+                                : item.highlight
+                                  ? "bg-primary/10 text-primary"
                                   : "text-foreground hover:bg-accent/10 hover:text-primary"
-                              )}
-                            >
-                              {item.icon && <item.icon className="h-4 w-4" />}
-                              <span>{item.label}</span>
-                            </Link>
-                          </SheetClose>
+                            )}
+                          >
+                            {item.icon && <item.icon className="h-4 w-4" />}
+                            {item.label}
+                          </Link>
                         )}
                       </div>
                     ))}
-                  </div>
-
-                  {/* Mobile CTA Button */}
-                  <Button 
-                    asChild
-                    className="mt-4 w-full h-8 text-sm bg-primary text-primary-foreground hover:bg-primary/90 rounded-full shadow-md"
-                  >
-                    <Link href="/quote">Get a Quote</Link>
-                  </Button>
+                  </nav>
                 </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+
+                {/* Mobile Footer */}
+                <div className="p-4 border-t border-border/40">
+                  <p className="text-xs text-muted-foreground text-center">
+                    © {new Date().getFullYear()} MinMind Digital Solutions
+                  </p>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

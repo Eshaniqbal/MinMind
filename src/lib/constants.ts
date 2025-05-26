@@ -1,26 +1,96 @@
 import type { NavItem, Project, Service, FaqItem } from './types';
-import { Home, Info, Briefcase, Lightbulb, MessageSquare, FileText, HelpCircle, GitBranch, Users, Palette, Bot, Code2, ShieldQuestion, Rocket, Smartphone, BarChart, BookOpen } from 'lucide-react';
+import { 
+  Home, 
+  Info, 
+  Briefcase, 
+  MessageSquare, 
+  FileText, 
+  HelpCircle, 
+  GitBranch, 
+  Users, 
+  Palette, 
+  Bot, 
+  Code2, 
+  Rocket, 
+  Smartphone, 
+  BarChart, 
+  BookOpen,
+  Building2,
+  GraduationCap,
+  LayoutDashboard,
+  Settings,
+  HeartHandshake,
+  Target,
+  Trophy,
+  Newspaper
+} from 'lucide-react';
 
 export const APP_NAME = "MinMind Digital Solutions";
 export const FOUNDER_NAME = "Eshan Iqbal";
 
 export const NAV_LINKS: NavItem[] = [
-  { label: 'Home', href: '/', icon: Home },
   { 
-    label: 'About Us', 
+    label: 'Home', 
+    href: '/', 
+    icon: Home 
+  },
+  { 
+    label: 'About', 
     href: '/about', 
-    icon: Info,
+    icon: Building2,
     items: [
-      { label: 'Overview', href: '/about' },
-      { label: 'Careers', href: '/careers', icon: Users },
+      { label: 'Company Overview', href: '/about', icon: Info },
+      { label: 'Our Team', href: '/about#team', icon: Users },
+      { label: 'Careers', href: '/careers', icon: GraduationCap },
+      { label: 'Mission & Vision', href: '/about#mission', icon: Target },
+      { label: 'Achievements', href: '/about#achievements', icon: Trophy },
     ]
   },
-  { label: 'Services', href: '/services', icon: Briefcase },
-  { label: 'Projects', href: '/projects', icon: Palette },
-  { label: 'Blog', href: '/blog', icon: BookOpen },
-  { label: 'Contact', href: '/contact', icon: MessageSquare },
-  { label: 'Get a Quote', href: '/quote', icon: FileText },
-  { label: 'FAQs', href: '/faq', icon: HelpCircle },
+  { 
+    label: 'Services', 
+    href: '/services', 
+    icon: Briefcase,
+    items: [
+      { label: 'Web Development', href: '/services#web', icon: Code2 },
+      { label: 'Mobile Apps', href: '/services#mobile', icon: Smartphone },
+      { label: 'UI/UX Design', href: '/services#design', icon: Palette },
+      { label: 'Digital Marketing', href: '/services#marketing', icon: BarChart },
+      { label: 'Custom Solutions', href: '/services#custom', icon: Settings },
+    ]
+  },
+  { 
+    label: 'Projects', 
+    href: '/projects', 
+    icon: LayoutDashboard,
+    items: [
+      { label: 'All Projects', href: '/projects', icon: Rocket },
+      { label: 'Web Projects', href: '/projects?category=web', icon: Code2 },
+      { label: 'Mobile Projects', href: '/projects?category=mobile', icon: Smartphone },
+      { label: 'Case Studies', href: '/projects/case-studies', icon: BookOpen },
+    ]
+  },
+  { 
+    label: 'Resources', 
+    href: '/resources', 
+    icon: BookOpen,
+    items: [
+      { label: 'Blog', href: '/blog', icon: Newspaper },
+      { label: 'FAQs', href: '/faq', icon: HelpCircle },
+      { label: 'Documentation', href: '/docs', icon: FileText },
+      { label: 'Support', href: '/support', icon: HeartHandshake },
+    ]
+  },
+  { 
+    label: 'Contact', 
+    href: '/contact', 
+    icon: MessageSquare 
+  },
+  { 
+    label: 'Get a Quote', 
+    href: '/quote', 
+    icon: FileText,
+    highlight: true
+  },
 ];
 
 export const FOOTER_LINKS = {
@@ -150,40 +220,23 @@ export const FAQ_DATA: FaqItem[] = [
 
 export const OPEN_ROLES = [
   {
-    id: 'frontend-dev',
-    title: 'Frontend Developer',
+    id: 'full-stack-dev',
+    title: 'Full Stack Developer',
     department: 'Engineering',
-    type: 'Full-time',
     location: 'Remote',
-    description: 'We are looking for a skilled Frontend Developer to create exceptional user interfaces using React, Next.js, and modern web technologies.',
+    description: 'We are looking for a skilled Full Stack Developer proficient in both frontend and backend technologies to build scalable web applications.',
     requirements: [
-      'Strong proficiency in React.js and Next.js',
+      'Strong proficiency in React.js, Next.js, and Node.js',
       'Experience with TypeScript and modern JavaScript',
-      'Knowledge of responsive design and CSS frameworks',
+      'Knowledge of database design and ORM tools',
       'Understanding of web performance optimization',
       'Minimum 2 years of relevant experience'
     ]
   },
   {
-    id: 'backend-dev',
-    title: 'Backend Developer',
-    department: 'Engineering',
-    type: 'Full-time',
-    location: 'Remote',
-    description: 'Seeking a Backend Developer to build robust and scalable server-side applications using Node.js and modern backend technologies.',
-    requirements: [
-      'Strong experience with Node.js and Express.js',
-      'Proficiency in database design and ORM tools',
-      'Knowledge of API design and REST principles',
-      'Understanding of cloud services (AWS/GCP)',
-      'Minimum 2 years of relevant experience'
-    ]
-  },
-  {
-    id: 'ui-designer',
+    id: 'ui-ux-designer',
     title: 'UI/UX Designer',
     department: 'Design',
-    type: 'Full-time',
     location: 'Remote',
     description: 'Looking for a creative UI/UX Designer to craft beautiful and intuitive user experiences for web and mobile applications.',
     requirements: [
@@ -191,22 +244,105 @@ export const OPEN_ROLES = [
       'Proficiency in Figma, Adobe XD, or similar tools',
       'Understanding of user-centered design principles',
       'Experience with design systems',
-      'Minimum 2 years of relevant experience'
+      'Strong visual design skills'
     ]
   },
   {
-    id: 'digital-marketing',
-    title: 'Digital Marketing Specialist',
+    id: 'growth-social-lead',
+    title: 'Growth & Social Media Lead',
     department: 'Marketing',
-    type: 'Full-time',
     location: 'Remote',
-    description: 'Seeking a Digital Marketing Specialist to drive our online presence and growth through various digital channels.',
+    description: 'Seeking a dynamic Growth & Social Media Lead to drive our social media presence and lead growth initiatives across platforms.',
     requirements: [
-      'Experience with SEO, SEM, and social media marketing',
-      'Knowledge of analytics tools and data-driven marketing',
-      'Content creation and marketing automation skills',
-      'Understanding of conversion optimization',
-      'Minimum 2 years of relevant experience'
+      'Proven track record in social media management',
+      'Experience with growth marketing strategies',
+      'Strong analytical and data-driven approach',
+      'Content creation and community management skills',
+      'Knowledge of social media analytics tools'
+    ]
+  },
+  {
+    id: 'content-writer',
+    title: 'Content Writer',
+    department: 'Marketing',
+    location: 'Remote',
+    description: 'Looking for a talented Content Writer to create engaging and SEO-optimized content for our digital platforms and client projects.',
+    requirements: [
+      'Excellent writing and editing skills',
+      'Experience in SEO content writing',
+      'Knowledge of content management systems',
+      'Ability to write for different audiences',
+      'Strong research and analytical skills'
+    ]
+  },
+  {
+    id: 'customer-support',
+    title: 'Customer Support',
+    department: 'Operations',
+    location: 'Remote',
+    description: 'Join our team as a Customer Support Representative to provide exceptional service and support to our clients.',
+    requirements: [
+      'Excellent communication skills',
+      'Problem-solving abilities',
+      'Experience with ticketing systems',
+      'Patient and empathetic approach',
+      'Basic technical understanding'
+    ]
+  },
+  {
+    id: 'product-manager',
+    title: 'Product Manager',
+    department: 'Product',
+    location: 'Remote',
+    description: 'We are seeking a Product Manager to lead product strategy and development, ensuring successful delivery of user-centric solutions.',
+    requirements: [
+      'Experience in product management',
+      'Strong understanding of user experience',
+      'Data-driven decision making skills',
+      'Excellent stakeholder management',
+      'Agile/Scrum methodology knowledge'
+    ]
+  },
+  {
+    id: 'seo-marketing',
+    title: 'SEO & Marketing',
+    department: 'Marketing',
+    location: 'Remote',
+    description: 'Looking for an SEO & Marketing specialist to improve our online visibility and implement effective marketing strategies.',
+    requirements: [
+      'Proven SEO experience',
+      'Knowledge of marketing analytics tools',
+      'Experience with SEM and PPC',
+      'Content strategy skills',
+      'Understanding of digital marketing channels'
+    ]
+  },
+  {
+    id: 'photographer-editor',
+    title: 'Photographer / Editor',
+    department: 'Creative',
+    location: 'Remote',
+    description: 'Optional role for a creative Photographer/Editor to capture and edit high-quality visual content for our projects.',
+    requirements: [
+      'Professional photography experience',
+      'Proficiency in Adobe Creative Suite',
+      'Strong photo editing skills',
+      'Understanding of brand guidelines',
+      'Portfolio of previous work'
+    ]
+  },
+  {
+    id: 'qa-engineer',
+    title: 'QA Engineer',
+    department: 'Engineering',
+    location: 'Remote',
+    description: 'Optional role for a QA Engineer to ensure the quality and reliability of our software products through comprehensive testing.',
+    requirements: [
+      'Experience in software testing',
+      'Knowledge of testing methodologies',
+      'Automation testing skills',
+      'Bug tracking and reporting',
+      'Attention to detail'
     ]
   }
 ];

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { OPEN_ROLES } from '@/lib/constants';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,6 +17,8 @@ interface FieldError {
 export default function CareerPage() {
   const router = useRouter();
   const [selectedRole, setSelectedRole] = useState('');
+  const formRef = useRef<HTMLDivElement>(null);
+  const [showAllRoles, setShowAllRoles] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -32,6 +34,8 @@ export default function CareerPage() {
     message: string;
   }>({ type: null, message: '' });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  const displayedRoles = showAllRoles ? OPEN_ROLES : OPEN_ROLES.slice(0, 2);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -49,7 +53,7 @@ export default function CareerPage() {
     }
   };
 
-  const handleRoleSelect = (roleId: string) => {
+  const handleApplyNow = (roleId: string) => {
     const role = OPEN_ROLES.find(r => r.id === roleId);
     if (role) {
       setSelectedRole(roleId);
@@ -57,6 +61,7 @@ export default function CareerPage() {
         ...prev,
         position: role.title
       }));
+      formRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -178,23 +183,19 @@ export default function CareerPage() {
       </section>
 
       {/* Open Positions Section */}
-      <section className="py-16 bg-background">
+      <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollAnimationWrapper animationType="fadeInUp">
             <h2 className="text-3xl font-bold text-center mb-12">Open Positions</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {OPEN_ROLES.map((role) => (
+              {displayedRoles.map((role) => (
                 <Card 
                   key={role.id}
-                  className={`cursor-pointer transition-all duration-300 hover:shadow-lg border-2 ${
-                    selectedRole === role.id ? 'border-primary' : 'border-border hover:border-primary/50'
-                  }`}
-                  onClick={() => handleRoleSelect(role.id)}
+                  className="border-2 border-border hover:border-primary/50 transition-all duration-300"
                 >
                   <CardHeader>
                     <CardTitle className="flex items-center justify-between">
                       <span className="text-xl">{role.title}</span>
-                      <ChevronRight className="h-5 w-5 text-primary" />
                     </CardTitle>
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mt-2">
                       <span className="flex items-center">
@@ -205,15 +206,11 @@ export default function CareerPage() {
                         <MapPin className="h-4 w-4 mr-1" />
                         {role.location}
                       </span>
-                      <span className="flex items-center">
-                        <Clock className="h-4 w-4 mr-1" />
-                        {role.type}
-                      </span>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">{role.description}</p>
-                    <div className="space-y-2">
+                    <div className="space-y-2 mb-6">
                       {role.requirements.map((req, index) => (
                         <div key={index} className="flex items-center text-sm">
                           <span className="h-1.5 w-1.5 rounded-full bg-primary mr-2" />
@@ -221,16 +218,34 @@ export default function CareerPage() {
                         </div>
                       ))}
                     </div>
+                    <Button 
+                      onClick={() => handleApplyNow(role.id)}
+                      className="w-full"
+                    >
+                      Apply Now
+                    </Button>
                   </CardContent>
                 </Card>
               ))}
             </div>
+            
+            {OPEN_ROLES.length > 2 && (
+              <div className="mt-8 text-center">
+                <Button
+                  onClick={() => setShowAllRoles(!showAllRoles)}
+                  variant="outline"
+                  className="px-8"
+                >
+                  {showAllRoles ? 'Show Less' : `Show More (${OPEN_ROLES.length - 2} positions)`}
+                </Button>
+              </div>
+            )}
           </ScrollAnimationWrapper>
         </div>
       </section>
 
       {/* Application Form Section */}
-      <section className="py-16 bg-card border-y border-border">
+      <section ref={formRef} className="py-16 bg-card border-y border-border">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollAnimationWrapper animationType="fadeInUp">
             <div className="max-w-3xl mx-auto">
