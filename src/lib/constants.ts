@@ -6,7 +6,15 @@ export const FOUNDER_NAME = "Eshan Iqbal";
 
 export const NAV_LINKS: NavItem[] = [
   { label: 'Home', href: '/', icon: Home },
-  { label: 'About Us', href: '/about', icon: Info },
+  { 
+    label: 'About Us', 
+    href: '/about', 
+    icon: Info,
+    items: [
+      { label: 'Overview', href: '/about' },
+      { label: 'Careers', href: '/careers', icon: Users },
+    ]
+  },
   { label: 'Services', href: '/services', icon: Briefcase },
   { label: 'Projects', href: '/projects', icon: Palette },
   { label: 'Blog', href: '/blog', icon: BookOpen },
@@ -20,6 +28,7 @@ export const FOOTER_LINKS = {
     { label: 'About Us', href: '/about' },
     { label: 'Services', href: '/services' },
     { label: 'Projects', href: '/projects' },
+    { label: 'Careers', href: '/careers' },
     { label: 'Contact', href: '/contact' },
   ],
   resources: [
@@ -136,5 +145,68 @@ export const FAQ_DATA: FaqItem[] = [
     id: 'faq5',
     question: 'What is MinMind\'s approach to UI/UX design?',
     answer: 'We believe that a great user experience is key to a successful digital product. Our design process is user-centric, focusing on creating intuitive, accessible, and aesthetically pleasing interfaces. We use modern design principles and tools to ensure your project is not only functional but also delightful to use.'
+  }
+];
+
+export const OPEN_ROLES = [
+  {
+    id: 'frontend-dev',
+    title: 'Frontend Developer',
+    department: 'Engineering',
+    type: 'Full-time',
+    location: 'Remote',
+    description: 'We are looking for a skilled Frontend Developer to create exceptional user interfaces using React, Next.js, and modern web technologies.',
+    requirements: [
+      'Strong proficiency in React.js and Next.js',
+      'Experience with TypeScript and modern JavaScript',
+      'Knowledge of responsive design and CSS frameworks',
+      'Understanding of web performance optimization',
+      'Minimum 2 years of relevant experience'
+    ]
+  },
+  {
+    id: 'backend-dev',
+    title: 'Backend Developer',
+    department: 'Engineering',
+    type: 'Full-time',
+    location: 'Remote',
+    description: 'Seeking a Backend Developer to build robust and scalable server-side applications using Node.js and modern backend technologies.',
+    requirements: [
+      'Strong experience with Node.js and Express.js',
+      'Proficiency in database design and ORM tools',
+      'Knowledge of API design and REST principles',
+      'Understanding of cloud services (AWS/GCP)',
+      'Minimum 2 years of relevant experience'
+    ]
+  },
+  {
+    id: 'ui-designer',
+    title: 'UI/UX Designer',
+    department: 'Design',
+    type: 'Full-time',
+    location: 'Remote',
+    description: 'Looking for a creative UI/UX Designer to craft beautiful and intuitive user experiences for web and mobile applications.',
+    requirements: [
+      'Strong portfolio demonstrating UI/UX projects',
+      'Proficiency in Figma, Adobe XD, or similar tools',
+      'Understanding of user-centered design principles',
+      'Experience with design systems',
+      'Minimum 2 years of relevant experience'
+    ]
+  },
+  {
+    id: 'digital-marketing',
+    title: 'Digital Marketing Specialist',
+    department: 'Marketing',
+    type: 'Full-time',
+    location: 'Remote',
+    description: 'Seeking a Digital Marketing Specialist to drive our online presence and growth through various digital channels.',
+    requirements: [
+      'Experience with SEO, SEM, and social media marketing',
+      'Knowledge of analytics tools and data-driven marketing',
+      'Content creation and marketing automation skills',
+      'Understanding of conversion optimization',
+      'Minimum 2 years of relevant experience'
+    ]
   }
 ];

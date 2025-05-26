@@ -5,6 +5,7 @@ export type NavItem = {
   label: string;
   href: string;
   icon?: LucideIcon;
+  items?: NavItem[];
 };
 
 export type Project = {

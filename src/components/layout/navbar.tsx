@@ -1,13 +1,20 @@
 "use client";
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle } from '@/components/ui/sheet';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { NAV_LINKS } from '@/lib/constants';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import type { NavItem } from '@/lib/types';
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,6 +28,65 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const NavLink = ({ item }: { item: NavItem }) => {
+    if (item.items) {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
+              className={cn(
+                "text-xs font-medium transition-all duration-300 h-8 px-3 rounded-full gap-1",
+                pathname === item.href 
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md" 
+                  : "text-foreground hover:text-primary hover:bg-accent/10"
+              )}
+            >
+              {item.icon && <item.icon className="h-3.5 w-3.5" />}
+              {item.label}
+              <ChevronDown className="h-3.5 w-3.5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-48">
+            {item.items.map((subItem) => (
+              <DropdownMenuItem key={subItem.href} asChild>
+                <Link
+                  href={subItem.href}
+                  className={cn(
+                    "flex items-center w-full px-2 py-1.5 text-sm",
+                    pathname === subItem.href && "bg-primary/10 text-primary"
+                  )}
+                >
+                  {subItem.icon && <subItem.icon className="mr-2 h-4 w-4" />}
+                  {subItem.label}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+
+    return (
+      <Button
+        variant={pathname === item.href ? "default" : "ghost"}
+        asChild
+        className={cn(
+          "text-xs font-medium transition-all duration-300 h-8 px-3 rounded-full",
+          pathname === item.href 
+            ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md" 
+            : "text-foreground hover:text-primary hover:bg-accent/10",
+          "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        )}
+      >
+        <Link href={item.href}>
+          {item.icon && <item.icon className="mr-1.5 h-3.5 w-3.5" />}
+          {item.label}
+        </Link>
+      </Button>
+    );
+  };
 
   return (
     <header className={cn(
@@ -53,23 +119,7 @@ export function Navbar() {
         <div className="flex-1 flex items-center justify-end">
           <nav className="hidden md:flex items-center gap-1.5 lg:gap-3">
             {NAV_LINKS.map((item) => (
-              <Button
-                key={item.label}
-                variant={pathname === item.href ? "default" : "ghost"}
-                asChild
-                className={cn(
-                  "text-xs font-medium transition-all duration-300 h-8 px-3 rounded-full",
-                  pathname === item.href 
-                    ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md" 
-                    : "text-foreground hover:text-primary hover:bg-accent/10",
-                  "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                )}
-              >
-                <Link href={item.href}>
-                  {item.icon && <item.icon className="mr-1.5 h-3.5 w-3.5" />}
-                  {item.label}
-                </Link>
-              </Button>
+              <NavLink key={item.href} item={item} />
             ))}
           </nav>
 
@@ -111,20 +161,49 @@ export function Navbar() {
                   {/* Mobile Navigation */}
                   <div className="space-y-1.5">
                     {NAV_LINKS.map((item) => (
-                      <SheetClose asChild key={item.label}>
-                        <Link
-                          href={item.href}
-                          className={cn(
-                            "flex items-center space-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                            pathname === item.href 
-                              ? "bg-primary/10 text-primary" 
-                              : "text-foreground hover:bg-accent/10 hover:text-primary"
-                          )}
-                        >
-                          {item.icon && <item.icon className="h-4 w-4" />}
-                          <span>{item.label}</span>
-                        </Link>
-                      </SheetClose>
+                      <div key={item.href}>
+                        {item.items ? (
+                          <>
+                            <div className="flex items-center px-3 py-2 text-sm font-medium text-foreground">
+                              {item.icon && <item.icon className="h-4 w-4 mr-2" />}
+                              {item.label}
+                            </div>
+                            <div className="pl-5 space-y-1">
+                              {item.items.map((subItem) => (
+                                <SheetClose key={subItem.href} asChild>
+                                  <Link
+                                    href={subItem.href}
+                                    className={cn(
+                                      "flex items-center space-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                                      pathname === subItem.href 
+                                        ? "bg-primary/10 text-primary" 
+                                        : "text-foreground hover:bg-accent/10 hover:text-primary"
+                                    )}
+                                  >
+                                    {subItem.icon && <subItem.icon className="h-4 w-4" />}
+                                    <span>{subItem.label}</span>
+                                  </Link>
+                                </SheetClose>
+                              ))}
+                            </div>
+                          </>
+                        ) : (
+                          <SheetClose asChild>
+                            <Link
+                              href={item.href}
+                              className={cn(
+                                "flex items-center space-x-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                                pathname === item.href 
+                                  ? "bg-primary/10 text-primary" 
+                                  : "text-foreground hover:bg-accent/10 hover:text-primary"
+                              )}
+                            >
+                              {item.icon && <item.icon className="h-4 w-4" />}
+                              <span>{item.label}</span>
+                            </Link>
+                          </SheetClose>
+                        )}
+                      </div>
                     ))}
                   </div>
 
