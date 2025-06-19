@@ -201,15 +201,6 @@ export function Navbar() {
                         Menu
                       </SheetTitle>
                     </div>
-                    <SheetTrigger asChild>
-                      <Button 
-                        variant="ghost" 
-                        size="icon"
-                        className="h-9 w-9 rounded-full hover:bg-accent/10"
-                      >
-                        <X className="h-5 w-5 text-primary" />
-                      </Button>
-                    </SheetTrigger>
                   </div>
                 </SheetHeader>
 

@@ -273,6 +273,18 @@ function EmblaCarouselWithNav({ children, className = '', dotClassName = '' }: E
   );
 }
 
+// Utility to detect mobile
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
 export default function HomePage() {
   const featuredProjects = PLACEHOLDER_PROJECTS.slice(0, 2);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -281,6 +293,15 @@ export default function HomePage() {
   const mouseY = useMotionValue(0);
   const containerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
+  const isMobile = useIsMobile();
+
+  // Reduce background elements for mobile
+  const PARTICLES_MOBILE = PARTICLES.slice(0, Math.ceil(PARTICLES.length / 2));
+  const BLOBS_MOBILE = BLOBS.slice(0, Math.ceil(BLOBS.length / 2));
+  const ACCENTS_MOBILE = ACCENTS.slice(0, Math.ceil(ACCENTS.length / 2));
+  const SPARKLES_MOBILE = SPARKLES.slice(0, Math.ceil(SPARKLES.length / 2));
+  const GLOW_DOTS_MOBILE = GLOW_DOTS.slice(0, Math.ceil(GLOW_DOTS.length / 2));
+  const DARK_DOTS_MOBILE = DARK_DOTS.slice(0, Math.ceil(DARK_DOTS.length / 2));
 
   // Create motion values for particle transformations
   const particleTransformX = useTransform(mouseX, [-1, 1], [-2, 2]);
@@ -339,14 +360,13 @@ export default function HomePage() {
             ]
           }}
           transition={{
-            duration: 20,
+            duration: isMobile ? 10 : 20,
             repeat: Infinity,
             ease: "linear"
           }}
         />
-
         {/* Animated mesh gradient */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 opacity-70"
           animate={{
             background: [
@@ -358,171 +378,155 @@ export default function HomePage() {
             ]
           }}
           transition={{
-            duration: 30,
+            duration: isMobile ? 15 : 30,
             repeat: Infinity,
             ease: "linear"
           }}
         />
-
         {/* Dark dots */}
-        <div className="absolute inset-0">
-          {DARK_DOTS.map((dot) => (
-            <motion.div
-              key={dot.id}
-              className="absolute rounded-full"
-              style={{
-                width: `${dot.size}px`,
-                height: `${dot.size}px`,
-                left: `${dot.x}%`,
-                top: `${dot.y}%`,
-                opacity: dot.opacity,
-                background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%)',
-                filter: 'blur(0.5px)',
-                boxShadow: '0 0 4px rgba(255,255,255,0.2)'
-              }}
-              animate={isClient ? {
-                scale: [1, 1.2, 1],
-                opacity: [dot.opacity, dot.opacity * 1.5, dot.opacity],
-                x: [0, 3, 0],
-                y: [0, -3, 0]
-              } : {}}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: dot.id * 0.2
-              }}
-            />
-          ))}
-        </div>
-
+        {(isMobile ? DARK_DOTS_MOBILE : DARK_DOTS).map((dot) => (
+          <motion.div
+            key={dot.id}
+            className="absolute rounded-full"
+            style={{
+              width: `${dot.size}px`,
+              height: `${dot.size}px`,
+              left: `${dot.x}%`,
+              top: `${dot.y}%`,
+              opacity: dot.opacity,
+              background: 'radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%)',
+              filter: 'blur(0.5px)',
+              boxShadow: '0 0 4px rgba(255,255,255,0.2)'
+            }}
+            animate={isClient ? {
+              scale: [1, 1.2, 1],
+              opacity: [dot.opacity, dot.opacity * 1.5, dot.opacity],
+              x: [0, 3, 0],
+              y: [0, -3, 0]
+            } : {}}
+            transition={{
+              duration: isMobile ? 2 : 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: dot.id * 0.2
+            }}
+          />
+        ))}
         {/* Enhanced sparkle dots */}
-        <div className="absolute inset-0">
-          {SPARKLES.map((sparkle) => (
-            <motion.div
-              key={sparkle.id}
-              className="absolute rounded-full"
-              style={{
-                width: `${sparkle.size}px`,
-                height: `${sparkle.size}px`,
-                left: `${sparkle.x}%`,
-                top: `${sparkle.y}%`,
-                background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)',
-                boxShadow: '0 0 6px rgba(255,255,255,0.4)'
-              }}
-              animate={isClient ? {
-                scale: [1, 1.5, 1],
-                opacity: [0, 1, 0],
-                rotate: [0, 180, 360]
-              } : {}}
-              transition={{
-                duration: sparkle.duration,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: sparkle.id * 0.2
-              }}
-            />
-          ))}
-        </div>
-
+        {(isMobile ? SPARKLES_MOBILE : SPARKLES).map((sparkle) => (
+          <motion.div
+            key={sparkle.id}
+            className="absolute rounded-full"
+            style={{
+              width: `${sparkle.size}px`,
+              height: `${sparkle.size}px`,
+              left: `${sparkle.x}%`,
+              top: `${sparkle.y}%`,
+              background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)',
+              boxShadow: '0 0 6px rgba(255,255,255,0.4)'
+            }}
+            animate={isClient ? {
+              scale: [1, 1.5, 1],
+              opacity: [0, 1, 0],
+              rotate: [0, 180, 360]
+            } : {}}
+            transition={{
+              duration: isMobile ? sparkle.duration / 2 : sparkle.duration,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: sparkle.id * 0.2
+            }}
+          />
+        ))}
         {/* Enhanced glow dots */}
-        <div className="absolute inset-0">
-          {GLOW_DOTS.map((dot) => (
-            <motion.div
-              key={dot.id}
-              className="absolute rounded-full"
-              style={{
-                width: `${dot.size}px`,
-                height: `${dot.size}px`,
-                left: `${dot.x}%`,
-                top: `${dot.y}%`,
-                opacity: dot.opacity,
-                background: 'radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%)',
-                filter: 'blur(1px)',
-                boxShadow: '0 0 10px rgba(255,255,255,0.5)'
-              }}
-              animate={isClient ? {
-                scale: [1, 1.2, 1],
-                opacity: [dot.opacity, dot.opacity * 1.5, dot.opacity],
-                x: [0, 5, 0],
-                y: [0, -5, 0]
-              } : {}}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: dot.id * 0.3
-              }}
-            />
-          ))}
-        </div>
-
+        {(isMobile ? GLOW_DOTS_MOBILE : GLOW_DOTS).map((dot) => (
+          <motion.div
+            key={dot.id}
+            className="absolute rounded-full"
+            style={{
+              width: `${dot.size}px`,
+              height: `${dot.size}px`,
+              left: `${dot.x}%`,
+              top: `${dot.y}%`,
+              opacity: dot.opacity,
+              background: 'radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%)',
+              filter: 'blur(1px)',
+              boxShadow: '0 0 10px rgba(255,255,255,0.5)'
+            }}
+            animate={isClient ? {
+              scale: [1, 1.2, 1],
+              opacity: [dot.opacity, dot.opacity * 1.5, dot.opacity],
+              x: [0, 5, 0],
+              y: [0, -5, 0]
+            } : {}}
+            transition={{
+              duration: isMobile ? 1.5 : 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: dot.id * 0.3
+            }}
+          />
+        ))}
         {/* Enhanced floating particles */}
-        <div className="absolute inset-0">
-          {PARTICLES.map((particle) => (
-            <motion.div
-              key={particle.id}
-              className="absolute rounded-full"
-              style={{
-                width: `${particle.size}px`,
-                height: `${particle.size}px`,
-                left: `${particle.x}%`,
-                top: `${particle.y}%`,
-                opacity: 0.4,
-                x: particleTransformX,
-                y: particleTransformY,
-                background: 'linear-gradient(45deg, rgba(13, 24, 41, 0.8), rgba(14, 91, 130, 0.8))',
-                boxShadow: '0 0 8px rgba(13, 24, 41, 0.5)'
-              }}
-              animate={isClient ? {
-                y: [0, -20, 0],
-                scale: [1, 1.2, 1],
-                opacity: [0.4, 0.5, 0.4],
-                rotate: [0, 180, 360]
-              } : {}}
-              transition={{
-                duration: 20,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: particle.id * 0.5
-              }}
-            />
-          ))}
-        </div>
-
+        {(isMobile ? PARTICLES_MOBILE : PARTICLES).map((particle) => (
+          <motion.div
+            key={particle.id}
+            className="absolute rounded-full"
+            style={{
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              left: `${particle.x}%`,
+              top: `${particle.y}%`,
+              opacity: 0.4,
+              x: particleTransformX,
+              y: particleTransformY,
+              background: 'linear-gradient(45deg, rgba(13, 24, 41, 0.8), rgba(14, 91, 130, 0.8))',
+              boxShadow: '0 0 8px rgba(13, 24, 41, 0.5)'
+            }}
+            animate={isClient ? {
+              y: [0, -20, 0],
+              scale: [1, 1.2, 1],
+              opacity: [0.4, 0.5, 0.4],
+              rotate: [0, 180, 360]
+            } : {}}
+            transition={{
+              duration: isMobile ? 10 : 20,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: particle.id * 0.5
+            }}
+          />
+        ))}
         {/* Enhanced animated blobs */}
-        <div className="absolute inset-0">
-          {BLOBS.map((blob) => (
-            <motion.div
-              key={blob.id}
-              className="absolute rounded-full"
-              style={{
-                width: `${blob.size}px`,
-                height: `${blob.size}px`,
-                left: `${blob.x}%`,
-                top: `${blob.y}%`,
-                opacity: 0.25,
-                filter: 'blur(40px)',
-                x: blobTransformX,
-                y: blobTransformY,
-                background: 'linear-gradient(45deg, rgba(13, 24, 41, 0.6), rgba(14, 91, 130, 0.6))',
-                boxShadow: '0 0 25px rgba(13, 24, 41, 0.4)'
-              }}
-              animate={isClient ? {
-                scale: [1, 1.1, 1],
-                opacity: [0.25, 0.3, 0.25],
-                rotate: [0, 90, 180]
-              } : {}}
-              transition={{
-                duration: 30,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: blob.id * 2
-              }}
-            />
-          ))}
-        </div>
-
+        {(isMobile ? BLOBS_MOBILE : BLOBS).map((blob) => (
+          <motion.div
+            key={blob.id}
+            className="absolute rounded-full"
+            style={{
+              width: `${blob.size}px`,
+              height: `${blob.size}px`,
+              left: `${blob.x}%`,
+              top: `${blob.y}%`,
+              opacity: 0.25,
+              filter: 'blur(40px)',
+              x: blobTransformX,
+              y: blobTransformY,
+              background: 'linear-gradient(45deg, rgba(13, 24, 41, 0.6), rgba(14, 91, 130, 0.6))',
+              boxShadow: '0 0 25px rgba(13, 24, 41, 0.4)'
+            }}
+            animate={isClient ? {
+              scale: [1, 1.1, 1],
+              opacity: [0.25, 0.3, 0.25],
+              rotate: [0, 90, 180]
+            } : {}}
+            transition={{
+              duration: isMobile ? 15 : 30,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: blob.id * 2
+            }}
+          />
+        ))}
         {/* Enhanced interactive glow effect */}
         <motion.div 
           className="absolute inset-0"
@@ -534,7 +538,6 @@ export default function HomePage() {
             boxShadow: '0 0 35px rgba(14, 91, 130, 0.4)'
           }}
         />
-
         {/* Base gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-background/40 via-background/50 to-background/40" />
       </div>
@@ -735,6 +738,99 @@ export default function HomePage() {
               </EmblaCarouselWithNav>
             );
           })()}
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section className="mt-12 md:mt-16 py-12">
+        <div className="container mx-auto px-4 md:px-6 text-center">
+          <ScrollAnimationWrapper animationType="fadeInUp">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-primary mb-4">Our Packages & Pricing</h2>
+            <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Choose the plan that fits your needs. Transparent pricing, no hidden fees. Custom solutions available on request!
+            </p>
+          </ScrollAnimationWrapper>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
+            {[
+              {
+                name: "Basic",
+                price: "₹4,999",
+                subtitle: "Perfect for individuals & startups",
+                features: [
+                  "1-Page Website or Landing Page",
+                  "Responsive Design",
+                  "Basic Contact Form",
+                  "1 Revision",
+                  "Delivery: 3-5 Days"
+                ],
+                details: "Ideal for a quick online presence or campaign."
+              },
+              {
+                name: "Advance",
+                price: "₹14,999",
+                subtitle: "Best for growing businesses",
+                features: [
+                  "Up to 5 Pages",
+                  "Responsive Design",
+                  "Contact & Quote Forms",
+                  "Basic SEO",
+                  "3 Revisions",
+                  "Delivery: 7-10 Days"
+                ],
+                details: "Great for small businesses looking to scale."
+              },
+              {
+                name: "Extreme",
+                price: "₹29,999+",
+                subtitle: "For enterprises & custom needs",
+                features: [
+                  "Unlimited Pages",
+                  "Custom Features (Blog, Portfolio, etc.)",
+                  "Advanced SEO",
+                  "E-commerce/Integrations",
+                  "Priority Support",
+                  "Unlimited Revisions",
+                  "Delivery: Custom"
+                ],
+                details: "For those who need the best, with full customization."
+              }
+            ].map((pkg, idx) => (
+              <div
+                key={pkg.name}
+                className={
+                  cn(
+                    "relative flex flex-col items-center justify-between h-full rounded-2xl border border-primary/20 bg-card/70 backdrop-blur-md shadow-xl transition-all duration-300 overflow-hidden",
+                    "hover:border-primary/60 hover:shadow-primary/30 hover:shadow-2xl",
+                    idx === 1
+                      ? "z-10 max-w-md min-h-[400px] p-8 scale-105 ring-2 ring-primary/60"
+                      : "max-w-xs min-h-[340px] p-6",
+                    "w-full mx-auto"
+                  )
+                }
+              >
+                <CardHeader className="text-center pt-6 pb-2 flex flex-col items-center">
+                  <span className="mb-4 px-5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary text-primary-foreground shadow-md border border-primary/30">
+                    {pkg.name}
+                  </span>
+                  <CardTitle className="text-3xl font-extrabold text-primary mb-2 drop-shadow-lg">{pkg.price}</CardTitle>
+                  <div className="text-base text-muted-foreground mb-2 font-semibold">{pkg.subtitle}</div>
+                </CardHeader>
+                <CardContent className="flex-grow flex flex-col justify-center w-full px-2">
+                  <ul className="text-left space-y-3 mb-6 mx-auto max-w-xs">
+                    {pkg.features.map((f, i) => (
+                      <li key={i} className="flex items-center gap-2 text-foreground/90">
+                        <span className="text-primary">✔️</span> <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mb-4 text-sm text-muted-foreground text-center px-2">{pkg.details}</div>
+                  <Button asChild className="w-full mt-auto font-bold text-lg shadow-lg transition-transform duration-200 hover:scale-105 hover:shadow-primary/40 hover:shadow-2xl focus:scale-105 focus:shadow-primary/40 focus:shadow-2xl" variant="default">
+                    <Link href="/quote">Get Started</Link>
+                  </Button>
+                </CardContent>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
