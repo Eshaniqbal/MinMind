@@ -799,12 +799,19 @@ export default function HomePage() {
                 key={pkg.name}
                 className={
                   cn(
-                    "relative flex flex-col items-center justify-between h-full rounded-2xl border border-primary/20 bg-card/70 backdrop-blur-md shadow-xl transition-all duration-300 overflow-hidden",
+                    // Responsive card design
+                    "relative flex flex-col items-center justify-between h-full rounded-2xl bg-card/70 backdrop-blur-md shadow-xl transition-all duration-300 overflow-hidden",
                     "hover:border-primary/60 hover:shadow-primary/30 hover:shadow-2xl",
-                    idx === 1
-                      ? "z-10 max-w-md min-h-[400px] p-8 scale-105 ring-2 ring-primary/60"
-                      : "max-w-xs min-h-[340px] p-6",
-                    "w-full mx-auto"
+                    // Desktop/tablet: border and ring for Advance
+                    idx === 1 && !isMobile
+                      ? "z-10 max-w-md min-h-[400px] p-8 scale-105 ring-2 ring-primary/60 border border-primary/20"
+                      : !isMobile
+                        ? "max-w-xs min-h-[340px] p-6 border border-primary/20"
+                        : "w-full min-h-[220px] p-4 mb-6 border-none shadow-md",
+                    // Mobile: highlight Advance with subtle bg/shadow only
+                    idx === 1 && isMobile && "bg-primary/10 shadow-lg border-none ring-0",
+                    // Mobile: full width, stacked, compact
+                    isMobile && "w-full max-w-full min-w-0 mx-0"
                   )
                 }
               >

@@ -45,7 +45,15 @@ export const quoteFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Invalid email address." }),
   company: z.string().optional(),
-  projectType: z.enum(["web-development", "cse-project", "custom-solution", "other"], { required_error: "Please select a project type."}),
+  projectType: z.enum([
+    "web-development",
+    "mobile-app",
+    "ecommerce",
+    "portfolio",
+    "cse-project",
+    "custom-solution",
+    "other"
+  ], { required_error: "Please select a project type." }),
   budget: z.string().optional(),
   details: z.string().min(20, { message: "Please provide at least 20 characters of details." }),
 });

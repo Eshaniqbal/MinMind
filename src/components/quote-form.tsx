@@ -159,6 +159,9 @@ export function QuoteForm() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="web-development">Web Development</SelectItem>
+              <SelectItem value="mobile-app">Mobile App</SelectItem>
+              <SelectItem value="ecommerce">E-commerce</SelectItem>
+              <SelectItem value="portfolio">Portfolio</SelectItem>
               <SelectItem value="cse-project">CSE Project Support</SelectItem>
               <SelectItem value="custom-solution">Custom Solution</SelectItem>
               <SelectItem value="other">Other</SelectItem>
